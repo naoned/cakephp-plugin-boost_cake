@@ -1,5 +1,5 @@
 {
-    "name": "slywalker/boost_cake",
+    "name": "naonedsystemes/boost_cake",
     "type": "cakephp-plugin",
     "description": "BoostCake is a plugin for CakePHP using Bootstrap",
     "keywords": [
@@ -13,6 +13,10 @@
         {
             "name": "Yasuo Harada",
             "email": "slywalker.net@gmail.com"
+        },
+        {
+            "name": "vibby",
+            "email": "vbeauvive@naoned-systemes.fr"
         }
     ],
     "support": {
