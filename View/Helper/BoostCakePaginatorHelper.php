@@ -91,10 +91,11 @@ class BoostCakePaginatorHelper extends PaginatorHelper {
 		}
 		unset($options['disabled']);
 
-		return parent::prev($title, $options, $this->link($title), array_merge($options, array(
+		$return = parent::prev($title, $options, $disabledTitle, array_merge($options, array(
 			'escape' => false,
 			'class' => $disabled,
 		)));
+        return $return;
 	}
 
 	public function next($title = null, $options = array(), $disabledTitle = null, $disabledOptions = array()) {
@@ -118,7 +119,7 @@ class BoostCakePaginatorHelper extends PaginatorHelper {
 		}
 		unset($options['disabled']);
 
-		return parent::next($title, $options, $this->link($title), array_merge($options, array(
+		return parent::next($title, $options, $disabledTitle, array_merge($options, array(
 			'escape' => false,
 			'class' => $disabled,
 		)));
@@ -136,11 +137,10 @@ class BoostCakePaginatorHelper extends PaginatorHelper {
 			'first' => null,
 			'last' => null,
 			'ellipsis' => '<li class="disabled"><a href="#">…</a></li>',
-			'currentClass' => 'current'
+			'currentClass' => 'current disabled'
 		);
 		$options += $defaults;
-		$return = parent::numbers($options);
-		return preg_replace('@<li class="current">(.*?)</li>@', '<li class="current disabled"><a href="#">\1</a></li>', $return);
+		return parent::numbers($options);
 	}
 
 	public function first($title = null, $options = array()) {
