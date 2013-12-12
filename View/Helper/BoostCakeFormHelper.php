@@ -68,13 +68,14 @@ class BoostCakeFormHelper extends FormHelper {
 					'class' => 'help-block text-danger'
 				)
 			),
-			'wrapInput' => array(
-				'tag' => 'div'
-			),
+			'wrapInput' => false,
 			'checkboxDiv' => 'checkbox',
 			'beforeInput' => '',
 			'afterInput' => '',
-			'errorClass' => 'has-error error'
+			'errorClass' => 'has-error error',
+			'label' => array(
+				'class' => 'control-label'
+			),
 		);
 
 		$options = Hash::merge(
