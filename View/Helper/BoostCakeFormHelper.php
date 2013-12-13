@@ -62,21 +62,42 @@ class BoostCakeFormHelper extends FormHelper {
 		$this->_fieldName = $fieldName;
 
 		$default = array(
-			'error' => array(
-				'attributes' => array(
-					'wrap' => 'span',
-					'class' => 'help-block text-danger'
-				)
-			),
-			'wrapInput' => false,
+			'class' 	  => 'form-control',
+			'wrapInput'   => false,
 			'checkboxDiv' => 'checkbox',
 			'beforeInput' => '',
-			'afterInput' => '',
-			'errorClass' => 'has-error error',
-			'label' => array(
+			'afterInput'  => '',
+			'errorClass'  => 'has-error error',
+			'label'       => array(
 				'class' => 'control-label'
 			),
+			'div' 		  => array(
+				'class' => 'form-group',
+			),
+			'error'       => array(
+				'attributes' => array(
+					'wrap'  => 'span',
+					'class' => 'help-block text-danger',
+				)
+			),
 		);
+
+		// if label is text only, set it to label->text (to keep other stuff from defaults)
+		if (array_key_exists('label', $options) && !is_array($options['label'])) {
+			$options['label'] = array('text' => $options['label']);
+		}
+
+		// if something must be added to input, wrap it in .input-group
+		if (
+			!empty($options['afterInput'])
+			||
+			!empty($options['beforeInput'])
+		) {
+			$default['wrapInput'] = array(
+				'tag'   => 'div',
+				'class' => 'input-group',
+			);
+		}
 
 		$options = Hash::merge(
 			$default,
@@ -86,7 +107,6 @@ class BoostCakeFormHelper extends FormHelper {
 
 		$this->_inputOptions = $options;
 
-		$options['error'] = false;
 		if (isset($options['wrapInput'])) {
 			unset($options['wrapInput']);
 		}
@@ -111,9 +131,13 @@ class BoostCakeFormHelper extends FormHelper {
 		$this->_inputDefaults = $inputDefaults;
 
 		if ($this->_inputType === 'checkbox') {
-			if (isset($options['before'])) {
-				$html = str_replace($options['before'], '%before%', $html);
-			}
+
+			$options['class'] = false;
+			$options['label']['class'] =  false;
+			$options['div'] = false;
+
+			$html = parent::input($fieldName, $options);
+
 			$regex = '/(<label.*?>)(.*?<\/label>)/';
 			if (preg_match($regex, $html, $label)) {
 				$label = str_replace('$', '\$', $label);
@@ -123,9 +147,6 @@ class BoostCakeFormHelper extends FormHelper {
 					$label[1] . '$1 ' . $label[2],
 					$html
 				);
-			}
-			if (isset($options['before'])) {
-				$html = str_replace('%before%', $options['before'], $html);
 			}
 		}
 
