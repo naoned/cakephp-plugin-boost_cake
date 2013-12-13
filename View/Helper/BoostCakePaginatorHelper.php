@@ -91,11 +91,18 @@ class BoostCakePaginatorHelper extends PaginatorHelper {
 		}
 		unset($options['disabled']);
 
-		$return = parent::prev($title, $options, $disabledTitle, array_merge($options, array(
-			'escape' => false,
-			'class' => $disabled,
-		)));
-        return $return;
+		return parent::prev(
+			$title,
+			$options,
+			$this->link($title, array(), $options),
+			array_merge(
+				$options,
+				array(
+					'escape' => false,
+					'class' => $disabled,
+				)
+			)
+		);
 	}
 
 	public function next($title = null, $options = array(), $disabledTitle = null, $disabledOptions = array()) {
@@ -119,10 +126,18 @@ class BoostCakePaginatorHelper extends PaginatorHelper {
 		}
 		unset($options['disabled']);
 
-		return parent::next($title, $options, $disabledTitle, array_merge($options, array(
-			'escape' => false,
-			'class' => $disabled,
-		)));
+		return parent::next(
+            $title,
+            $options,
+            $this->link($title, array(), $options),
+            array_merge(
+				$options,
+				array(
+				    'escape' => false,
+	                'class' => $disabled,
+	           )
+			)
+        );
 	}
 
 	public function numbers($options = array()) {

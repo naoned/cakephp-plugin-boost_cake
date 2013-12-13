@@ -1,4 +1,4 @@
-<?php
+p
 App::uses('FormHelper', 'View/Helper');
 App::uses('Set', 'Utility');
 
@@ -140,7 +140,7 @@ class BoostCakeFormHelper extends FormHelper {
 
 			$html = parent::input($fieldName, $options);
 
-			$regex = '/(<label.*?>)(.*?<\/label>)/';
+			$regex = '/(<label.*?>)(.*?<\/label>)/s';
 			if (preg_match($regex, $html, $label)) {
 				$label = str_replace('$', '\$', $label);
 				$html = preg_replace($regex, '', $html);
@@ -208,7 +208,7 @@ class BoostCakeFormHelper extends FormHelper {
 			}
 		}
 
-		$html = $beforeInput . $input . $afterInput . $error;
+		$html = $beforeInput . $input . $error . $afterInput;
 
 		if ($this->_divOptions) {
 			$tag = $this->_divOptions['tag'];
@@ -244,7 +244,16 @@ class BoostCakeFormHelper extends FormHelper {
 						$match[1] = str_replace(' class="' . $classMatch[1] . '"', '', $match[1]);
 					}
 					$option = $match[1] . preg_replace('/<label.*?>/', ' ', $option);
-					$option = preg_replace('/(<label.*?)(>)/', '$1 class="' . $class . '"$2', $option);
+					if (isset($attributes['class'])) {
+						$attributes['class'] = implode(' ', (array)$attributes['class']);
+						if (preg_match('/<label.*?class="(.*?)".*?>/', $option, $m)) {
+						    $option = preg_replace('/(<label.*?)class=".*?"(.*?>)/', '$1$2', $option);
+							$exClass = ' ' . $m[1];
+						} else {
+							$exClass = '';
+						}
+						$option = preg_replace('/(<label.*?)(>)/', '$1 class="' . $attributes['class'] . $exClass. '"$2', $option);
+					}
 				}
 				$selectOptions[$key] = $option;
 			}
