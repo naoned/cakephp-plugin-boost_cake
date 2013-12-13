@@ -83,7 +83,9 @@ class BoostCakeFormHelper extends FormHelper {
 		);
 
 		// if label is text only, set it to label->text (to keep other stuff from defaults)
-		if (array_key_exists('label', $options) && !is_array($options['label'])) {
+		if (array_key_exists('label', $options) &&
+			is_string($options['label'])
+		) {
 			$options['label'] = array('text' => $options['label']);
 		}
 
