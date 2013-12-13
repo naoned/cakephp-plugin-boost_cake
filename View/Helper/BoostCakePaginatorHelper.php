@@ -94,7 +94,7 @@ class BoostCakePaginatorHelper extends PaginatorHelper {
 		return parent::prev(
 			$title,
 			$options,
-			$this->link($title, array(), $options),
+			$disabledTitle,
 			array_merge(
 				$options,
 				array(
@@ -129,7 +129,7 @@ class BoostCakePaginatorHelper extends PaginatorHelper {
 		return parent::next(
             $title,
             $options,
-            $this->link($title, array(), $options),
+			$disabledTitle,
             array_merge(
 				$options,
 				array(

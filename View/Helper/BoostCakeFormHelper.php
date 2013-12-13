@@ -1,4 +1,4 @@
-p
+<?php
 App::uses('FormHelper', 'View/Helper');
 App::uses('Set', 'Utility');
 
